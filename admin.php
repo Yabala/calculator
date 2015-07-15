@@ -48,7 +48,7 @@ $YABALA = unserialize($s);
 <!-- ------------------------------------------------------------------------------------------------------------------>
 
 <h1>CALCULATOR</h1>
-<h2><?php echo "Administración de la colección &lt;&lt;".$nombre."&gt;&gt;" ?></h2>
+<h2><?php echo "Administración del conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;" ?></h2>
 
 <!-- ------------------------------------------------------------------------------------------------------------------>
 <!-- FIN ENCABEZADO --------------------------------------------------------------------------------------------------->
@@ -62,12 +62,12 @@ $YABALA = unserialize($s);
 
 
 <!-- ------------------------------------------------------------------------------------------------------------------>
-<!-- INICIO FORMULARIO AGREGAR OBRA ----------------------------------------------------------------------------------->
+<!-- INICIO FORMULARIO AGREGAR MATERIAL ----------------------------------------------------------------------------------->
 <!-- ------------------------------------------------------------------------------------------------------------------>
 <form name='ocADD' method='post' action='add.php' class='admin'>
 
 <div class='admin'>
-Si quiere agregar una obra al remix, indique: Formato, Keywords, Autor, Url y Licencia de la obra a agregar y luego haga clic en el botón "AGREGAR OBRA". 
+Si quiere agregar un material al conjunto, indique: Formato, Keywords, Autor, Url y Licencia del material a agregar y luego haga clic en el botón "AGREGAR MATERIAL". 
 </div>
 
 <table>
@@ -142,10 +142,10 @@ LICENCIA:
 </table>
 
 <input name='nombre' value='<?php echo $nombre ?>' type='hidden' />
-<input value='AGREGAR OBRA' type='submit' />
+<input value='AGREGAR MATERIAL' type='submit' />
 </form>
 <!-- ------------------------------------------------------------------------------------------------------------------>
-<!-- FIN FORMULARIO AGREGAR OBRA -------------------------------------------------------------------------------------->
+<!-- FIN FORMULARIO AGREGAR MATERIAL -------------------------------------------------------------------------------------->
 <!-- ------------------------------------------------------------------------------------------------------------------>
 
 
@@ -158,15 +158,15 @@ LICENCIA:
 
 
 <!-- ------------------------------------------------------------------------------------------------------------------>
-<!-- INICIO FORMULARIO ADMINISTRAR OBRAS ------------------------------------------------------------------------------>
+<!-- INICIO FORMULARIO ADMINISTRAR MATERIALES ------------------------------------------------------------------------------>
 <!-- ------------------------------------------------------------------------------------------------------------------>
 
 <?php
 
 $works = $YABALA->getWorks();
-if ($works!=null){//HAY OBRAS QUE ADMINISTRAR	
+if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR	
 	echo "<form name='ocDel' method='post' action='del.php' class='admin'>\n";
-	echo "<div class='admin'>Listado de obras integrantes del remix, si quiere borrar una obra seleccionela y haga clic en el botón \"BORRAR OBRA\".</div>";
+	echo "<div class='admin'>Listado de materiales integrantes del conjunto, si quiere borrar un material seleccionelo y haga clic en el botón \"BORRAR MATERIAL\".</div>";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 
 	echo "<table class='admin'>";
@@ -185,14 +185,14 @@ if ($works!=null){//HAY OBRAS QUE ADMINISTRAR
 		echo "</tr>";
 	}
 	echo "</table>";
-	echo "<input value='BORRAR OBRA' type='submit' />\n";
+	echo "<input value='BORRAR MATERIAL' type='submit' />\n";
 	echo "</form>\n";
-}else{//NO HAY OBRAS QUE ADMINISTRAR
-	echo "<div class='admin'>NO HAY OBRAS PARA LISTAR</div>";
+}else{//NO HAY MATERIALES QUE ADMINISTRAR
+	echo "<div class='admin'>NO HAY MATERIALES PARA LISTAR</div>";
 }
 ?>
 <!-- ------------------------------------------------------------------------------------------------------------------>
-<!-- FIN FORMULARIO ADMINISTRAR OBRAS --------------------------------------------------------------------------------->
+<!-- FIN FORMULARIO ADMINISTRAR MATERIALES --------------------------------------------------------------------------------->
 <!-- ------------------------------------------------------------------------------------------------------------------>
 
 
@@ -212,9 +212,9 @@ if ($works!=null){//HAY OBRAS QUE ADMINISTRAR
 $licencias = $YABALA->calculator();
 $obras = $YABALA->getWorks();
 
-if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y OBRAS EN LA COLECCION
+if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y MATERIALES EN EL CONJUNTO DE MATERIALES
 	echo "<form name='ocCredits' method='post' action='credits.php' class='admin'>\n";
-	echo "<div class='admin'>Elegir una de las licencias disponibles y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el remix de obras.</div>";
+	echo "<div class='admin'>Elegir una de las licencias disponibles y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el conjunto de materiales.</div>";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 	echo "\n"; 
 	echo "<select name='licencia'>\n";
@@ -225,11 +225,11 @@ if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y O
 	echo "<br>\n";
 	echo "<input value='CREAR CRÉDITOS' type='submit' />\n";
 	echo "</form>\n";
-}else{//NO HAY LICENCIAS POR LAS CUALES OPTAR O NO HAY OBRAS EN LA COLECCION
+}else{//NO HAY LICENCIAS POR LAS CUALES OPTAR O NO HAY MATERIALES EN EL CONJuNTO DE MATERIALES
 	if ($licencias==null){//NO HAY LICENCIAS
-		echo "<div class='admin'>LA ACTUAL COMBINACIÓN NO ADMITE GENERAR OBRAS DERIVADAS</div>";
-	}else{//NO HAY OBRAS
-		echo "<div class='admin'>DEBE AGREGAR OBRAS PARA PODER OPTAR POR UNA LICENCIA</div>";
+		echo "<div class='admin'>LA ACTUAL COMBINACIÓN DE MATERIALES NO ADMITE GENERAR OBRAS DERIVADAS</div>";
+	}else{//NO HAY MATERIALES
+		echo "<div class='admin'>DEBE AGREGAR MATERIALES PARA PODER OPTAR POR UNA LICENCIA</div>";
 	}
 }
 ?>

@@ -61,7 +61,7 @@ $YABALA = unserialize($s);
 
 <input name="nombre" value="<?php echo $nombre ?>" type="hidden" />
 
-<input value="ADMINISTRAR LA COLECCION: <?php echo $nombre ?>" type="submit" />
+<input value="ADMINISTRAR EL CONJUNTO DE MATERIALES: <?php echo $nombre ?>" type="submit" />
 
 </form>
 

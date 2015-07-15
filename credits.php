@@ -42,7 +42,7 @@ $YABALA = unserialize($s);
 
 //Encabezado
 echo "<h1>CALCULATOR</h1>";
-echo "<h2>Créditos de la colección &lt;&lt;".$nombre."&gt;&gt;</h2>";
+echo "<h2>Créditos del conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;</h2>";
 
 //creditos
 $creditURL = $YABALA->credits($nombre, $_POST["licencia"], null);
@@ -52,8 +52,12 @@ echo "<table class='credits'>";
 echo "<th>LICENCIA</th>";
 
 echo "<tr  class='credits'>";
-echo "<td  class='credits' >Imagen de la licencia</td>";
+echo "<td  class='credits' >Imagen tradicional de la licencia</td>";
 echo "<td  class='credits' ><img src='$creditURL[3]'</td>";
+echo "</tr>";
+echo "<tr  class='credits'>";
+echo "<td  class='credits' >Link permanente a la imagen tradicional de la licencia</td>";
+echo "<td  class='credits' ><a href='$creditURL[3]'  target='_blank'>$creditURL[3]</a></td>";
 echo "</tr>";
 
 echo "<tr  class='credits'>";

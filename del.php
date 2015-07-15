@@ -42,14 +42,14 @@ $YABALA = unserialize($s);
 
 //Encabezado
 echo "<h1>CALCULATOR</h1>";
-echo "<h2>Borrar obra de la colección &lt;&lt;".$nombre."&gt;&gt;</h2>";
+echo "<h2>Borrar material del conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;</h2>";
 
 //quitar el oc (obra) de la coleccion
 if (isset($_POST["works"])) {
-	$mensaje = "La obra fue borrada del remix";
+	$mensaje = "El material fue borrado del conjunto";
 	$YABALA->del($_POST["works"]);
 }else{
-	$mensaje = "No seleccionó ninguna obra para borrar del remix";
+	$mensaje = "No seleccionó ningun material para borrar del conjunto";
 }
 
 //Enviar la variable a disco

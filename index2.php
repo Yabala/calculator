@@ -36,12 +36,12 @@
 <form name="createOP" method="post" action="create.php" class="index">
 
 <div class="index">
-Escriba el nombre de una colección ya existente para administrarla, si el nombre ingresado es de una colección que no existe se creará una nueva colección.
+Escriba el nombre de un "conjunto de materiales" ya existente para administrar, si el nombre ingresado es de un conjunto que no existe se creará un nuevo conjunto.
 </div>
 <p>
-NOMBRE DE LA COLECCI&Oacute;N: <input type="text" name="nombre" value="">
+NOMBRE DEL CONJUNTO DE MATERIALES: <input type="text" name="nombre" value="">
 <p>
-<input value="CREAR O ABRIR COLECCIÓN" type="submit" />
+<input value="CREAR O ABRIR CONJUNTO DE MATERIALES" type="submit" />
 
 </form>
 

@@ -42,7 +42,7 @@ $YABALA = unserialize($s);
 
 //Encabezado
 echo "<h1>CALCULATOR</h1>";
-echo "<h2>Agregar obra de la colección &lt;&lt;".$nombre."&gt;&gt;</h2>";
+echo "<h2>Agregar material al conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;</h2>";
 
 //agregar el oc (obra) a la coleccion
 $YABALA->add($_POST["format"], $_POST["keywords"], $_POST["autor"], $_POST["url"], $_POST["cc"]);
@@ -57,7 +57,7 @@ file_put_contents('work/'.$nombre, $dump);
 
 //formulario para volver al administrador
 echo "<form name='back' method='post' action='admin.php' class='add'>";
-echo "<div class='add'>Obra agregada al remix:".$_POST["format"].", ".$_POST["keywords"].", ".$_POST["autor"].", ".$_POST["url"].", ".$_POST["cc"]."</div>";
+echo "<div class='add'>Material agregado al conjunto:".$_POST["format"].", ".$_POST["keywords"].", ".$_POST["autor"].", ".$_POST["url"].", ".$_POST["cc"]."</div>";
 echo "<input name='nombre' value='$nombre' type='hidden' />";
 echo "<input value='VOLVER' type='submit' />";
 echo "</form>";
