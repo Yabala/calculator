@@ -26,11 +26,12 @@
 <html>
 <head>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
-<h1>CALCULATOR</h1>
+<h1><i class="fa fa-calculator"></i> CALCULATOR</h1>
 
 <?php
 
@@ -60,8 +61,7 @@ $YABALA = unserialize($s);
 <form name="back" method="post" action="admin.php">
 
 <input name="nombre" value="<?php echo $nombre ?>" type="hidden" />
-
-<input value="ADMINISTRAR EL CONJUNTO DE MATERIALES: <?php echo $nombre ?>" type="submit" />
+<input value="ADMINISTRAR EL CONJUNTO DE MATERIALES: <?php echo $nombre ?>" type="submit"  id='submit' />
 
 </form>
 

@@ -26,6 +26,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -47,7 +48,7 @@ $YABALA = unserialize($s);
 <!-- INICIO ENCABEZADO ------------------------------------------------------------------------------------------------>
 <!-- ------------------------------------------------------------------------------------------------------------------>
 
-<h1>CALCULATOR</h1>
+<h1><i class="fa fa-calculator"></i> CALCULATOR</h1>
 <h2><?php echo "Administración del conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;" ?></h2>
 
 <!-- ------------------------------------------------------------------------------------------------------------------>
@@ -69,7 +70,7 @@ $YABALA = unserialize($s);
 <div class='admin'>
 Si quiere agregar un material al conjunto, indique: Formato, Keywords, Autor, Url y Licencia del material a agregar y luego haga clic en el botón "AGREGAR MATERIAL". 
 </div>
-
+<br />
 <table>
 
 <tr>
@@ -142,7 +143,8 @@ LICENCIA:
 </table>
 
 <input name='nombre' value='<?php echo $nombre ?>' type='hidden' />
-<input value='AGREGAR MATERIAL' type='submit' />
+<br />
+<input value='AGREGAR MATERIAL' type='submit'  id='submit' />
 </form>
 <!-- ------------------------------------------------------------------------------------------------------------------>
 <!-- FIN FORMULARIO AGREGAR MATERIAL -------------------------------------------------------------------------------------->
@@ -166,7 +168,7 @@ LICENCIA:
 $works = $YABALA->getWorks();
 if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR	
 	echo "<form name='ocDel' method='post' action='del.php' class='admin'>\n";
-	echo "<div class='admin'>Listado de materiales integrantes del conjunto, si quiere borrar un material seleccionelo y haga clic en el botón \"BORRAR MATERIAL\".</div>";
+	echo "<div class='admin'>Listado de materiales integrantes del conjunto, si quiere borrar un material seleccionelo y haga clic en el botón \"BORRAR MATERIAL\".</div><br />";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 
 	echo "<table class='admin'>";
@@ -174,21 +176,16 @@ if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR
 	
 	foreach ($works as $key => $work){
 		echo "<tr class='admin'><td class='admin'><input type='radio' name='works' value='$key'>";
-		//$a=0;
-		//print_r($work);
 		foreach ($work as $field){
-			//$field1 = (string) $field;
 			echo "<td class='admin'>".$field."</td>";
-			//echo "$a<p>";
-			//$a = $a+1;
 		}
 		echo "</tr>";
 	}
 	echo "</table>";
-	echo "<input value='BORRAR MATERIAL' type='submit' />\n";
+	echo "<br /><input value='BORRAR MATERIAL' type='submit'  id='submit' />\n";
 	echo "</form>\n";
 }else{//NO HAY MATERIALES QUE ADMINISTRAR
-	echo "<div class='admin'>NO HAY MATERIALES PARA LISTAR</div>";
+	echo "<form class='admin'>NO HAY MATERIALES PARA LISTAR</form>";
 }
 ?>
 <!-- ------------------------------------------------------------------------------------------------------------------>
@@ -214,7 +211,7 @@ $obras = $YABALA->getWorks();
 
 if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y MATERIALES EN EL CONJUNTO DE MATERIALES
 	echo "<form name='ocCredits' method='post' action='credits.php' class='admin'>\n";
-	echo "<div class='admin'>Elegir una de las licencias disponibles y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el conjunto de materiales.</div>";
+	echo "<div class='admin'>Elegir una de las licencias disponibles y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el conjunto de materiales.</div><br />";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 	echo "\n"; 
 	echo "<select name='licencia'>\n";
@@ -222,14 +219,14 @@ if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y M
 		echo "<option value='$item'>$item</option>\n";
 	}
 	echo "</select>\n";
-	echo "<br>\n";
-	echo "<input value='CREAR CRÉDITOS' type='submit' />\n";
+	echo "<br /><br />\n";
+	echo "<input value='CREAR CRÉDITOS' type='submit'  id='submit' />\n";
 	echo "</form>\n";
 }else{//NO HAY LICENCIAS POR LAS CUALES OPTAR O NO HAY MATERIALES EN EL CONJuNTO DE MATERIALES
 	if ($licencias==null){//NO HAY LICENCIAS
-		echo "<div class='admin'>LA ACTUAL COMBINACIÓN DE MATERIALES NO ADMITE GENERAR OBRAS DERIVADAS</div>";
+		echo "<form class='admin'>LA ACTUAL COMBINACIÓN DE MATERIALES NO ADMITE GENERAR OBRAS DERIVADAS</form>";
 	}else{//NO HAY MATERIALES
-		echo "<div class='admin'>DEBE AGREGAR MATERIALES PARA PODER OPTAR POR UNA LICENCIA</div>";
+		echo "<form class='admin'>DEBE AGREGAR MATERIALES PARA PODER OPTAR POR UNA LICENCIA</form>";
 	}
 }
 ?>

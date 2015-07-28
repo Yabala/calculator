@@ -26,11 +26,12 @@
 <html>
 <head>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
-<h1>CALCULATOR</h1>
+<h1><i class="fa fa-calculator"></i> CALCULATOR</h1>
 
 
 <form name="createOP" method="post" action="create.php" class="index">
@@ -40,8 +41,8 @@ Escriba el nombre de un "conjunto de materiales" ya existente para administrar, 
 </div>
 <p>
 NOMBRE DEL CONJUNTO DE MATERIALES: <input type="text" name="nombre" value="">
-<p>
-<input value="CREAR O ABRIR CONJUNTO DE MATERIALES" type="submit" />
+</p>
+<input value="CREAR O ABRIR CONJUNTO DE MATERIALES" type="submit"  id='submit' />
 
 </form>
 

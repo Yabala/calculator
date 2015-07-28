@@ -26,6 +26,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -41,7 +42,7 @@ $YABALA = new yabala();
 $YABALA = unserialize($s);
 
 //Encabezado
-echo "<h1>CALCULATOR</h1>";
+echo "<h1><i class='fa fa-calculator'></i> CALCULATOR</h1>";
 echo "<h2>Agregar material al conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;</h2>";
 
 //agregar el oc (obra) a la coleccion
@@ -57,9 +58,9 @@ file_put_contents('work/'.$nombre, $dump);
 
 //formulario para volver al administrador
 echo "<form name='back' method='post' action='admin.php' class='add'>";
-echo "<div class='add'>Material agregado al conjunto:".$_POST["format"].", ".$_POST["keywords"].", ".$_POST["autor"].", ".$_POST["url"].", ".$_POST["cc"]."</div>";
+echo "<div class='add'>Material agregado al conjunto:<br /><br />Formato: ".$_POST["format"]."<br /> Keywords: ".$_POST["keywords"]."<br /> Autor: ".$_POST["autor"]."<br /> Url: ".$_POST["url"]."<br /> Licencia: ".$_POST["cc"]."</div>";
 echo "<input name='nombre' value='$nombre' type='hidden' />";
-echo "<input value='VOLVER' type='submit' />";
+echo "<br /><br /><input value='VOLVER' type='submit'  id='submit' />";
 echo "</form>";
 
 ?>

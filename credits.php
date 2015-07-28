@@ -26,6 +26,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -41,7 +42,7 @@ $YABALA = new yabala();
 $YABALA = unserialize($s);
 
 //Encabezado
-echo "<h1>CALCULATOR</h1>";
+echo "<h1><i class='fa fa-calculator'></i> CALCULATOR</h1>";
 echo "<h2>Créditos del conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;</h2>";
 
 //creditos
@@ -49,7 +50,7 @@ $creditURL = $YABALA->credits($nombre, $_POST["licencia"], null);
 
 echo "<table class='credits'>";
 
-echo "<th>LICENCIA</th>";
+echo "<th class='credits' colspan='2'>LICENCIA</th>";
 
 echo "<tr  class='credits'>";
 echo "<td  class='credits' >Imagen tradicional de la licencia</td>";
@@ -76,7 +77,7 @@ echo "<p>&nbsp;</p>";
 
 echo "<table class='credits'>";
 
-echo "<th>CRÉDITOS</th>";
+echo "<th class='credits' colspan='2'>CRÉDITOS</th>";
 
 echo "<tr  class='credits'>";
 echo "<td  class='credits' >Link permanente a los créditos</td>";
@@ -96,7 +97,7 @@ echo "</tr>";
 
 echo "</table>";
 
-echo "<p>&nbsp;</p>";
+echo "<br />";
 
 //Enviar la variable a disco
 $dump = serialize($YABALA);
@@ -104,7 +105,7 @@ file_put_contents('work/'.$nombre, $dump);
 
 
 //volver
-echo "<form name='back' method='post' action='admin.php'><input name='nombre' value='$nombre' type='hidden' /><input value='VOLVER' type='submit' /></form>";
+echo "<form name='back' method='post' action='admin.php'><input name='nombre' value='$nombre' type='hidden' /><input value='VOLVER' type='submit'  id='submit' /></form>";
 
 ?>
 
