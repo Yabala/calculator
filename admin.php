@@ -68,10 +68,19 @@ $YABALA = unserialize($s);
 <form name='ocADD' method='post' action='add.php' class='admin'>
 
 <div class='admin'>
-Si quiere agregar un material al conjunto, indique: Formato, Keywords, Autor, Url y Licencia del material a agregar y luego haga clic en el botón "AGREGAR MATERIAL". 
+Si quiere agregar un material al conjunto, indique: Formato, Keywords, Autor, Url, la licencia del material a agregar, indique si el material será usado en su forma original o modificado y luego haga clic en el botón "AGREGAR MATERIAL". 
 </div>
 <br />
 <table>
+
+<tr>
+<td>
+T&Iacute;TULO:
+</td>
+<td>
+<input type='text' name='title' value=''>
+</td>
+</tr>
 
 <tr>
 <td>
@@ -140,6 +149,18 @@ LICENCIA:
 </td>
 </tr>
 
+<tr>
+<td>
+MODIFICADO?: 
+</td>
+<td>
+<select name='modify'>
+	<option value="TRUE">SI</option>
+	<option value="FALSE">NO</option>
+</select>
+</td>
+</tr>
+
 </table>
 
 <input name='nombre' value='<?php echo $nombre ?>' type='hidden' />
@@ -172,7 +193,7 @@ if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 
 	echo "<table class='admin'>";
-	echo "<tr class='admin'><td class='admin'>&nbsp;</td><td class='admin'>Formato</td><td class='admin'>Keyword</td><td class='admin'>Autor</td><td class='admin'>URL</td><td class='admin'>Licencia</td></tr>";
+	echo "<tr class='admin'><td class='admin'>&nbsp;</td><td class='admin'>T&iacute;tulo</td><td class='admin'>Formato</td><td class='admin'>Keyword</td><td class='admin'>Autor</td><td class='admin'>URL</td><td class='admin'>Licencia</td><td class='admin'>Modificado?</td></tr>";
 	
 	foreach ($works as $key => $work){
 		echo "<tr class='admin'><td class='admin'><input type='radio' name='works' value='$key'>";
@@ -211,15 +232,41 @@ $obras = $YABALA->getWorks();
 
 if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y MATERIALES EN EL CONJUNTO DE MATERIALES
 	echo "<form name='ocCredits' method='post' action='credits.php' class='admin'>\n";
-	echo "<div class='admin'>Elegir una de las licencias disponibles y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el conjunto de materiales.</div><br />";
+	echo "<div class='admin'>Elegir una de las licencias disponibles, indicar el título (si lo desea), indicar el o los autores (si corresponde) y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el conjunto de materiales.</div><br />";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 	echo "\n"; 
+	
+	echo "<table>";
+	
+	echo "<tr>";
+	echo "<td>LICENCIA: </td>";
+	echo "<td>";
 	echo "<select name='licencia'>\n";
 	foreach ($licencias as $item){
 		echo "<option value='$item'>$item</option>\n";
 	}
 	echo "</select>\n";
-	echo "<br /><br />\n";
+	echo "</td>";
+	echo "</tr>";
+	
+	echo "<tr>";
+	echo "<td>T&Iacute;TULO: </td>";
+	echo "<td>";	
+	echo "<input name='title' value='' type='text' />\n";
+	echo "</td>";
+	echo "</tr>";
+
+
+	echo "<tr>";
+	echo "<td>AUTOR: </td>";
+	echo "<td>";	
+	echo "<input name='author' value='' type='text' />\n";
+	echo "</td>";
+	echo "</tr>";
+	
+	echo "</table>";
+
+	echo "<br />\n";
 	echo "<input value='CREAR CRÉDITOS' type='submit'  id='submit' />\n";
 	echo "</form>\n";
 }else{//NO HAY LICENCIAS POR LAS CUALES OPTAR O NO HAY MATERIALES EN EL CONJuNTO DE MATERIALES

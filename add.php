@@ -45,23 +45,38 @@ $YABALA = unserialize($s);
 echo "<h1><i class='fa fa-calculator'></i> CALCULATOR</h1>";
 echo "<h2>Agregar material al conjunto de materiales &lt;&lt;".$nombre."&gt;&gt;</h2>";
 
-//agregar el oc (obra) a la coleccion
-$YABALA->add($_POST["format"], $_POST["keywords"], $_POST["autor"], $_POST["url"], $_POST["cc"]);
+//definir variable boolean
+if($_POST["modify"]=="TRUE") $modify=TRUE;
+else $modify=FALSE;
 
-//agregar el oc (obra) a la bd para que pueda ser recuperado en busquedas
-//(esto no es obligatorio, el desarrollador puede optar por hacerlo o no)
-$YABALA->insert($_POST["format"], $_POST["keywords"], $_POST["autor"], $_POST["url"], $_POST["cc"]);
+//agregar el oc (obra) a la coleccion
+$msg = $YABALA->add($_POST["title"], $_POST["format"], $_POST["keywords"], $_POST["autor"], $_POST["url"], $_POST["cc"], $modify);
+
+//Si no hay error
+if ($msg==""){
+	//agregar el oc (obra) a la bd para que pueda ser recuperado en busquedas
+	//(esto no es obligatorio, el desarrollador puede optar por hacerlo o no)
+	$YABALA->insert($_POST["title"], $_POST["format"], $_POST["keywords"], $_POST["autor"], $_POST["url"], $_POST["cc"], $modify);
+
+	//formulario para volver al administrador
+	echo "<form name='back' method='post' action='admin.php' class='add'>";
+	echo "<div class='add'>Material agregado al conjunto:<br /><br />Titulo: ".$_POST["title"]."<br />Formato: ".$_POST["format"]."<br /> Keywords: ".$_POST["keywords"]."<br /> Autor: ".$_POST["autor"]."<br /> Url: ".$_POST["url"]."<br /> Licencia: ".$_POST["cc"]."<br /> Modificado?: ".$_POST["modify"]."</div>";
+	echo "<input name='nombre' value='$nombre' type='hidden' />";
+	echo "<br /><br /><input value='VOLVER' type='submit'  id='submit' />";
+	echo "</form>";
+}else{//Si hay error
+	//formulario para volver al administrador
+	echo "<form name='back' method='post' action='admin.php' class='add'>";
+	echo "<div class='add'>$msg</div>";
+	echo "<input name='nombre' value='$nombre' type='hidden' />";
+	echo "<br /><br /><input value='VOLVER' type='submit'  id='submit' />";
+	echo "</form>";
+
+}
 
 //Enviar la variable a disco 
 $dump = serialize($YABALA);
 file_put_contents('work/'.$nombre, $dump);
-
-//formulario para volver al administrador
-echo "<form name='back' method='post' action='admin.php' class='add'>";
-echo "<div class='add'>Material agregado al conjunto:<br /><br />Formato: ".$_POST["format"]."<br /> Keywords: ".$_POST["keywords"]."<br /> Autor: ".$_POST["autor"]."<br /> Url: ".$_POST["url"]."<br /> Licencia: ".$_POST["cc"]."</div>";
-echo "<input name='nombre' value='$nombre' type='hidden' />";
-echo "<br /><br /><input value='VOLVER' type='submit'  id='submit' />";
-echo "</form>";
 
 ?>
 
