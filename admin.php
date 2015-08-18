@@ -68,7 +68,7 @@ $YABALA = unserialize($s);
 <form name='ocADD' method='post' action='add.php' class='admin'>
 
 <div class='admin'>
-Si quiere agregar un material al conjunto, indique: Formato, Keywords, Autor, Url, la licencia del material a agregar, indique si el material será usado en su forma original o modificado y luego haga clic en el botón "AGREGAR MATERIAL". 
+Si quiere agregar un material al conjunto, indique: Formato, Keywords, Autor, Url, la licencia del material a agregar, indique si el material será usado en su forma original o modificado, si el mismo debe ser tratado como una excepción en relación a su licencia dentro del conjunto y luego haga clic en el botón "AGREGAR MATERIAL". 
 </div>
 <br />
 <table>
@@ -156,11 +156,22 @@ MODIFICADO?:
 <td>
 <select name='modify'>
 	<option value="TRUE">SI</option>
-	<option value="FALSE">NO</option>
+	<option value="FALSE" selected>NO</option>
 </select>
 </td>
 </tr>
 
+<tr>
+<td>
+ES UNA EXCEPCIÓN?: 
+</td>
+<td>
+<select name='exception'>
+	<option value="TRUE">SI</option>
+	<option value="FALSE" selected>NO</option>
+</select>
+</td>
+</tr>
 </table>
 
 <input name='nombre' value='<?php echo $nombre ?>' type='hidden' />
@@ -187,22 +198,49 @@ MODIFICADO?:
 <?php
 
 $works = $YABALA->getWorks();
-if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR	
+if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR
+
+	
 	echo "<form name='ocDel' method='post' action='del.php' class='admin'>\n";
-	echo "<div class='admin'>Listado de materiales integrantes del conjunto, si quiere borrar un material seleccionelo y haga clic en el botón \"BORRAR MATERIAL\".</div><br />";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 
+	//Se listan los que no tienen excepción
+	echo "<div class='admin'>Listado de materiales integrantes del conjunto, que no poseen excepciones.</div>";
 	echo "<table class='admin'>";
-	echo "<tr class='admin'><td class='admin'>&nbsp;</td><td class='admin'>T&iacute;tulo</td><td class='admin'>Formato</td><td class='admin'>Keyword</td><td class='admin'>Autor</td><td class='admin'>URL</td><td class='admin'>Licencia</td><td class='admin'>Modificado?</td></tr>";
+	echo "<tr class='admin'><td class='admin'>&nbsp;</td><td class='admin'>T&iacute;tulo</td><td class='admin'>Formato</td><td class='admin'>Keyword</td><td class='admin'>Autor</td><td class='admin'>URL</td><td class='admin'>Licencia</td><td class='admin'>Modificado?</td><td class='admin'>Excepción?</td></tr>";
 	
 	foreach ($works as $key => $work){
-		echo "<tr class='admin'><td class='admin'><input type='radio' name='works' value='$key'>";
-		foreach ($work as $field){
-			echo "<td class='admin'>".$field."</td>";
+		//si no tiene excepción se imprime
+		if($work[7]=="FALSE"){
+			echo "<tr class='admin'><td class='admin'><input type='radio' name='works' value='$key'>";
+			foreach ($work as $field){
+				echo "<td class='admin'>".$field."</td>";
+			}
+			echo "</tr>";
 		}
-		echo "</tr>";
 	}
 	echo "</table>";
+
+	echo "<br />";
+
+	//Se listan los que tienen excepción
+	echo "<div class='admin'>Listado de materiales integrantes del conjunto, que poseen excepciones.</div>";
+	echo "<table class='admin'>";
+	echo "<tr class='admin'><td class='admin'>&nbsp;</td><td class='admin'>T&iacute;tulo</td><td class='admin'>Formato</td><td class='admin'>Keyword</td><td class='admin'>Autor</td><td class='admin'>URL</td><td class='admin'>Licencia</td><td class='admin'>Modificado?</td><td class='admin'>Excepción?</td></tr>";
+	
+	foreach ($works as $key => $work){
+		//si tiene excepción se imprime
+		if($work[7]=="TRUE"){
+			echo "<tr class='admin'><td class='admin'><input type='radio' name='works' value='$key'>";
+			foreach ($work as $field){
+				echo "<td class='admin'>".$field."</td>";
+			}
+		echo "</tr>";
+		}
+	}
+	echo "</table>";
+
+	echo "<br /><div class='admin'>Si desea borrar un material seleccionelo y haga clic en el botón \"BORRAR MATERIAL\".</div>\n";
 	echo "<br /><input value='BORRAR MATERIAL' type='submit'  id='submit' />\n";
 	echo "</form>\n";
 }else{//NO HAY MATERIALES QUE ADMINISTRAR
@@ -230,25 +268,26 @@ if ($works!=null){//HAY MATERIALES QUE ADMINISTRAR
 $licencias = $YABALA->calculator();
 $obras = $YABALA->getWorks();
 
-if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y MATERIALES EN EL CONJUNTO DE MATERIALES
+if ($licencias!=null){//HAY LICENCIAS POR LAS CUALES OPTAR
 	echo "<form name='ocCredits' method='post' action='credits.php' class='admin'>\n";
 	echo "<div class='admin'>Elegir una de las licencias disponibles, indicar el título (si lo desea), indicar el o los autores (si corresponde) y haga clic en el botón \"CREAR CRÉDITOS\" para crear o actualizar los créditos en diferentes formatos con la licencia elejida para el conjunto de materiales.</div><br />";
 	echo "<input name='nombre' value='".$nombre."' type='hidden' />\n";
 	echo "\n"; 
-	
+
 	echo "<table>";
-	
+
 	echo "<tr>";
 	echo "<td>LICENCIA: </td>";
 	echo "<td>";
 	echo "<select name='licencia'>\n";
 	foreach ($licencias as $item){
-		echo "<option value='$item'>$item</option>\n";
+		if($item!="PD")//Para evitar que opte por PD
+			echo "<option value='$item'>$item</option>\n";
 	}
 	echo "</select>\n";
 	echo "</td>";
 	echo "</tr>";
-	
+
 	echo "<tr>";
 	echo "<td>T&Iacute;TULO: </td>";
 	echo "<td>";	
@@ -263,18 +302,14 @@ if (($licencias!=null)&&($obras!=null)){//HAY LICENCIAS POR LAS CUALES OPTAR y M
 	echo "<input name='author' value='' type='text' />\n";
 	echo "</td>";
 	echo "</tr>";
-	
+
 	echo "</table>";
 
 	echo "<br />\n";
 	echo "<input value='CREAR CRÉDITOS' type='submit'  id='submit' />\n";
 	echo "</form>\n";
-}else{//NO HAY LICENCIAS POR LAS CUALES OPTAR O NO HAY MATERIALES EN EL CONJuNTO DE MATERIALES
-	if ($licencias==null){//NO HAY LICENCIAS
-		echo "<form class='admin'>LA ACTUAL COMBINACIÓN DE MATERIALES NO ADMITE GENERAR OBRAS DERIVADAS</form>";
-	}else{//NO HAY MATERIALES
-		echo "<form class='admin'>DEBE AGREGAR MATERIALES PARA PODER OPTAR POR UNA LICENCIA</form>";
-	}
+}else{//NO HAY LICENCIAS POR LAS CUALES OPTAR
+	echo "<form class='admin'>LA ACTUAL COMBINACIÓN DE MATERIALES NO ADMITE GENERAR OBRAS DERIVADAS</form>";
 }
 ?>
 <!-- ------------------------------------------------------------------------------------------------------------------>
